@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class ContactRequest extends FormRequest
+class ContactRequest extends ApiFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +20,7 @@ class ContactRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => "required",
+            "name" => "required|min:8",
             "email" => "required|email|unique:contacts",
             "phone" => "required",
             "address" => "required"

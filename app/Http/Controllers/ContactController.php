@@ -8,12 +8,18 @@ use App\Http\Resources\ContactCollection;
 use App\Http\Resources\ContactResource;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
 class ContactController extends Controller
 {
     public function index(){
-        return new ContactCollection(Contact::all());
+        // return response()->json(["message" => "from controller"]);
+        $contacts = Contact::all(); 
+        if($contacts->isEmpty()){
+            return response()->json(["message" => "The database is empty"]); 
+        }
+        return new ContactCollection($contacts);
     }
 
     public function store(ContactRequest $request){
